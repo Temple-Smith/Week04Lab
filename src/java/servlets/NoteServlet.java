@@ -12,35 +12,49 @@ import models.Note;
  * @author awarsyle
  */
 public class NoteServlet extends HttpServlet {
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        
+        String edit = request.getParameter("edit");
+        request.setAttribute("edit",edit);
+        edit = "yes";
+        
+        
+        if (edit.equals("no")) {
         getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp")
                 .forward(request, response);
+        edit = "yes";
+        }
+        
+
+        else if(edit.equals("yes")) {
+        getServletContext().getRequestDispatcher("/WEB-INF/editnote.jsp")
+                .forward(request, response);
+       }
+        return;
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+  
+        
+        String edit = request.getParameter("edit");
+        request.setAttribute("edit",edit);
+        edit = "yes";
+        if(edit.equals("yes")) {
+        getServletContext().getRequestDispatcher("/WEB-INF/viewnote.jsp")
+                .forward(request, response);
+       }
+        return;
+//        getServletContext().getRequestDispatcher("/WEB-INF/editnote.jsp")
+//                .forward(request, response);
+//
+//        return;
     }
 }
 
-//    @Override
-//    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-//            throws ServletException, IOException {
-//
-//        String firstname = request.getParameter("firstname");
-//        String lastname = request.getParameter("lastname");
-//        
-//        if (firstname == null || firstname.equals("") || lastname == null || lastname.equals("")) {
-//            request.setAttribute("firstname", firstname);
-//            request.setAttribute("lastname", lastname);
-//            request.setAttribute("invalid", true);
-//            
-//            getServletContext().getRequestDispatcher("/WEB-INF/helloWorldForm.jsp")
-//                    .forward(request, response);
-//            return;
-//        }
-//        
-//        Person person = new Person(firstname, lastname);
-//        request.setAttribute("person", person);
-//
-//        getServletContext().getRequestDispatcher("/WEB-INF/sayHello.jsp")
-//                .forward(request, response);
-//    }
-//}
